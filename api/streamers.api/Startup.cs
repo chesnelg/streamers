@@ -30,7 +30,6 @@ namespace streamers.api
             {
                 app.UseDeveloperExceptionPage();
             }
-            
             app.UseMvc();
         }
     }

@@ -26,7 +26,8 @@ export default {
     };
   },
   created(){
-    oboe("http://localhost/streamers/api/values")
+    //oboe("http://localhost:5050/streamers/api/values")
+    oboe("http://localhost:5050/api/values")
       .node("resultset.*", (item) => {
         this.resultset.push(item);
         this.count = this.resultset.length;

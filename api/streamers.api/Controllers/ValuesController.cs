@@ -19,7 +19,6 @@ namespace streamers.api.Controllers
 
         IEnumerable<object> getItems()
         {
-            
             HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
             HttpContext.Response.Headers.Add("Access-Control-Allow-Methods", "*");
             HttpContext.Response.Headers.Add("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Encoding, Server, Transfer-Encoding");
@@ -27,7 +26,7 @@ namespace streamers.api.Controllers
             for (var i = 0; i < 10000; i++)
             {
                 yield return new { name = "item" + i, description = "description " + i };
-                Thread.Sleep(10);
+                Thread.Sleep(2);
             }
         }
 
