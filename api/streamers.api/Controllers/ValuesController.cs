@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using streamers.api.Sql;
 
 namespace streamers.api.Controllers
 {
@@ -35,6 +37,13 @@ namespace streamers.api.Controllers
         public string Get(int id)
         {
             return "value";
+        }
+
+        // GET api/values/database
+        [HttpGet("database")]
+        public object GetDBValues()
+        {
+            return StreamBulkData.ReturnBulkData();
         }
 
         // POST api/values

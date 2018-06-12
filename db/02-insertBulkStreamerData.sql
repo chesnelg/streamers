@@ -7,7 +7,6 @@ WITH
 	FIRSTROW = 2,
     FIELDTERMINATOR = ',',  --CSV field delimiter
     ROWTERMINATOR = '\n',   --Use to shift the control to next row
-    ERRORFILE = 'C:\Dev\SparkDays\streamers\db\TestFile\ErrorRows.txt',
     TABLOCK
 )
 COMMIT TRANSACTION
