@@ -1,0 +1,28 @@
+{
+  "vetur.format.defaultFormatter": {
+    "html": "none",
+    "css": "prettier",
+    "postcss": "prettier",
+    "scss": "prettier",
+    "less": "prettier",
+    "js": "vscode-typescript",
+    "ts": "vscode-typescript",
+    "stylus": "stylus-supremacy"
+  },
+  "stylelint.enable": true,
+  "css.validate": false,
+  "scss.validate": false,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "html",
+    "vue"
+  ],
+  "eslint.autoFixOnSave": true,
+  "eslint.options": {
+    "configFile": "./node_modules/feather-build/config/eslint.config.js",
+    "plugins": [
+      "vue"
+    ]
+  }
+}

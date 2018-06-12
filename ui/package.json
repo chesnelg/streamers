@@ -1,0 +1,40 @@
+{
+  "name": "streamers-ui",
+  "version": "0.0.0",
+  "description": "stream client",
+  "main": "dist/streamers-ui.js",
+  "module": "es/index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development feather-component-build",
+    "build": "cross-env NODE_ENV=production feather-component-build",
+    "lint": "feather-component-lint",
+    "unit": "feather-component-unit",
+    "unit:debug": "cross-env NODE_ENV=development feather-component-unit",
+    "test": "cross-env NODE_ENV=production feather-component-unit"
+  },
+  "keywords": [
+    "vue",
+    "streamers-ui"
+  ],
+  "author": "NantHealth",
+  "license": "MIT",
+  "dependencies": {
+    "@webpack-blocks/assets": "http://dml.navimedix.com:8081/artifactory/api/npm/navinet-npm-feature/@webpack-blocks/assets/-/assets-1.0.0.tgz",
+    "@webpack-blocks/babel": "http://dml.navimedix.com:8081/artifactory/api/npm/navinet-npm-feature/@webpack-blocks/babel/-/babel-1.0.0.tgz",
+    "@webpack-blocks/core": "http://dml.navimedix.com:8081/artifactory/api/npm/navinet-npm-feature/@webpack-blocks/core/-/core-1.0.0.tgz",
+    "@webpack-blocks/dev-server": "http://dml.navimedix.com:8081/artifactory/api/npm/navinet-npm-feature/@webpack-blocks/dev-server/-/dev-server-1.0.0.tgz",
+    "@webpack-blocks/extract-text": "http://dml.navimedix.com:8081/artifactory/api/npm/navinet-npm-feature/@webpack-blocks/extract-text/-/extract-text-1.0.0.tgz",
+    "@webpack-blocks/postcss": "http://dml.navimedix.com:8081/artifactory/api/npm/navinet-npm-feature/@webpack-blocks/postcss/-/postcss-1.0.0.tgz",
+    "@webpack-blocks/sass": "http://dml.navimedix.com:8081/artifactory/api/npm/navinet-npm-feature/@webpack-blocks/sass/-/sass-1.0.0.tgz",
+    "@webpack-blocks/typescript": "http://dml.navimedix.com:8081/artifactory/api/npm/navinet-npm-feature/@webpack-blocks/typescript/-/typescript-1.0.0.tgz",
+    "@webpack-blocks/uglify": "http://dml.navimedix.com:8081/artifactory/api/npm/navinet-npm-feature/@webpack-blocks/uglify/-/uglify-1.0.0.tgz",
+    "@webpack-blocks/webpack": "http://dml.navimedix.com:8081/artifactory/api/npm/navinet-npm-feature/@webpack-blocks/webpack/-/webpack-1.0.0.tgz",
+    "feather-utils": "*",
+    "oboe": "^2.1.4",
+    "vue": "*"
+  },
+  "devDependencies": {
+    "cross-env": "*",
+    "feather-build": "*"
+  }
+}
