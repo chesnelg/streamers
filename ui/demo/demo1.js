@@ -20,7 +20,7 @@ Vue.use(StreamersUi, { /* store */});
 var app = new Vue({
   //store,
   //i18n,
-  el: "#app"  
+  el: "#app"
 });
 
 export default app;
