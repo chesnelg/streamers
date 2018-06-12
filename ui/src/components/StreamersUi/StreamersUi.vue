@@ -1,5 +1,9 @@
 <template>
   <div>
+      <h3 class="total">
+        Number of items loaded: <span>{{ count }}</span><br>
+        Load status: <span> {{ isLoadComplete ? "Complete" : "Loading" }} </span>
+      </h3>
       <div class="item-row"  v-for="item in resultset" :key="item.name">
         <div class="item-col-1">
           {{ item.name}}
@@ -8,10 +12,6 @@
           {{ item.description }}
         </div>
       </div>
-      <h3 class="total">
-        Number of items loaded: <span>{{ count }}</span><br>
-        Load status: <span> {{ isLoadComplete ? "Complete" : "Loading" }} </span>
-      </h3>
   </div>
 </template>
 <script>
@@ -26,12 +26,12 @@ export default {
     };
   },
   created(){
-    oboe("/demo/data.json")
+    oboe("http://localhost/streamers/api/values")
       .node("resultset.*", (item) => {
         this.resultset.push(item);
+        this.count = this.resultset.length;
       })
       .done(() => {
-        this.count = this.resultset.length;
         this.isLoadComplete = true;
       });
   }
