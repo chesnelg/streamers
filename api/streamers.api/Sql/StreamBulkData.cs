@@ -1,24 +1,24 @@
 ﻿using streamers.api.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace streamers.api.Sql
 {
     public class StreamBulkData
     {
-        public static IEnumerable<InsurerData> ReturnBulkData()
-        {
-            List<InsurerData> insurerList = null;
+        static readonly string connString = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=StreamersDB;Integrated Security=True;Trusted_Connection=true;Persist Security Info=False;Enlist=false;Timeout=30;";
+        static readonly string sqlQueryString = "SELECT * FROM tblStreamerBulkData;";
 
-            string connString = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=StreamersDB;Integrated Security=True;Trusted_Connection=true;Persist Security Info=False;Enlist=false;Timeout=30;";
+
+        public static IEnumerable<InsurerData> DataReaderReturnData()
+        {
             SqlConnection conn = new SqlConnection(connString);
 
             using (conn)
             {
-                SqlCommand command = new SqlCommand(
-                  "SELECT * FROM tblStreamerBulkData;",
-                  conn);
+                SqlCommand command = new SqlCommand(sqlQueryString, conn);
                 SqlDataReader reader = null;
                 try
                 {
@@ -28,11 +28,9 @@ namespace streamers.api.Sql
 
                     if (reader.HasRows)
                     {
-                        insurerList = new List<InsurerData>();
                         while (reader.Read())
                         {
-                            InsurerData insurerData = BuildInsurerData(reader);
-                            insurerList.Add(insurerData);
+                            yield return BuildReaderInsurerData(reader);
                         }
                     }
                     else
@@ -40,18 +38,43 @@ namespace streamers.api.Sql
                         Console.WriteLine("No rows found.");
                     }
 
-                } catch(SqlException se)
-                {
-                    throw se;
                 } finally
                 {
                     reader.Close();
                 }
             }
-            return insurerList;
         }
 
-        private static InsurerData BuildInsurerData(SqlDataReader reader)
+        public static IEnumerable<InsurerData> DataAdapterReturnData()
+        {
+            SqlConnection conn = new SqlConnection(connString);
+
+            using (conn)
+            {
+                SqlCommand command = new SqlCommand(sqlQueryString, conn);
+                SqlDataAdapter adapter = null;
+                try
+                {
+                    conn.Open();
+
+                    adapter = new SqlDataAdapter(command);
+
+                    DataTable table = new DataTable();
+                    adapter.Fill(table);
+
+                    for(int i = 0; i < table.Rows.Count; i++)
+                    {
+                        yield return BuildAdapterInsurerData(table, i);
+                    }
+
+                } finally
+                {
+                    conn.Close();
+                }
+            }
+        }
+
+        private static InsurerData BuildReaderInsurerData(SqlDataReader reader)
         {
             InsurerData insurerData = new InsurerData
             {
@@ -80,7 +103,38 @@ namespace streamers.api.Sql
                 Construction = reader["construction"] as string,
                 PointGranularity = reader["point_granularity"] as string
             };
+            return insurerData;
+        }
 
+        private static InsurerData BuildAdapterInsurerData(DataTable table, int i)
+        {
+            InsurerData insurerData = new InsurerData
+            {
+                Id = (long)table.Rows[i]["StreamerDataID"],
+                PolicyId = table.Rows[i]["policyID"] as string,
+                StateCode = table.Rows[i]["statecode"] as string,
+                County = table.Rows[i]["county"] as string,
+
+                EqSiteLimit = table.Rows[i]["eq_site_limit"] as string,
+                HuSiteLimit = table.Rows[i]["hu_site_limit"] as string,
+                FlSiteLimit = table.Rows[i]["fl_site_limit"] as string,
+                FrSiteLimit = table.Rows[i]["fr_site_limit"] as string,
+
+                TivOne = table.Rows[i]["tiv_2011"] as string,
+                TivTwo = table.Rows[i]["tiv_2012"] as string,
+
+                EqSiteDeductible = table.Rows[i]["eq_site_deductible"] as string,
+                HuSiteDeductible = table.Rows[i]["hu_site_deductible"] as string,
+                FlSiteDeductible = table.Rows[i]["fl_site_deductible"] as string,
+                FrSiteDeductible = table.Rows[i]["fr_site_deductible"] as string,
+
+                PointLatitude = table.Rows[i]["point_latitude"] as string,
+                PointLongitude = table.Rows[i]["point_longitude"] as string,
+
+                Line = table.Rows[i]["line"] as string,
+                Construction = table.Rows[i]["construction"] as string,
+                PointGranularity = table.Rows[i]["point_granularity"] as string
+            };
             return insurerData;
         }
     }

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using streamers.api.Sql;
 
@@ -39,11 +35,34 @@ namespace streamers.api.Controllers
             return "value";
         }
 
-        // GET api/values/database
-        [HttpGet("database")]
+        // GET api/values/stream/database
+        [HttpGet("stream/database")]
+        public object GetDBStreamValues()
+        {
+            IEnumerable<object> databaseResult()
+            {
+                HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                HttpContext.Response.Headers.Add("Access-Control-Allow-Methods", "*");
+                HttpContext.Response.Headers.Add("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Encoding, Server, Transfer-Encoding");
+
+                return StreamBulkData.DataReaderReturnData();
+            }
+            return new { streamResult = databaseResult() };
+        }
+
+        // GET api/values/nonstream/database
+        [HttpGet("nonstream/database")]
         public object GetDBValues()
         {
-            return StreamBulkData.ReturnBulkData();
+            IEnumerable<object> databaseResult()
+            {
+                HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                HttpContext.Response.Headers.Add("Access-Control-Allow-Methods", "*");
+                HttpContext.Response.Headers.Add("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Encoding, Server, Transfer-Encoding");
+
+                return StreamBulkData.DataAdapterReturnData();
+            }
+            return new { nonStreamResult = databaseResult() };
         }
 
         // POST api/values
